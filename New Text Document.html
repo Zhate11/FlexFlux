@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlixFlow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header, footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em;
+        }
+
+        #videos, #game, #notes, #mouseDPI, #keyboardChecker {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 20px;
+        }
+
+        #videos iframe {
+            width: 100%;
+            height: 315px;
+            margin: 10px 0;
+        }
+
+        #game, #notes, #mouseDPI, #keyboardChecker {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        #notes textarea {
+            width: 100%;
+            height: 100px;
+        }
+
+        @media (max-width: 768px) {
+            #videos iframe, #game, #notes, #mouseDPI, #keyboardChecker {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to FlixFlow</h1>
+    </header>
+
+    <section id="videos">
+        <h2>Random YouTube Video</h2>
+        <iframe id="youtubeVideo" frameborder="0" allowfullscreen></iframe>
+    </section>
+
+    <section id="game">
+        <h2>Simple Game</h2>
+        <button onclick="startGame()">Start Game</button>
+        <p id="gameResult"></p>
+    </section>
+
+    <section id="notes">
+        <h2>Notes</h2>
+        <textarea id="userNotes" placeholder="Write your notes here"></textarea>
+        <button onclick="saveNotes()">Save Notes</button>
+    </section>
+
+    <section id="mouseDPI">
+        <h2>Mouse DPI Checker</h2>
+        <button onclick="checkMouseDPI()">Check Mouse DPI</button>
+        <p id="mouseDPIResult"></p>
+    </section>
+
+    <section id="keyboardChecker">
+        <h2>Keyboard Checker</h2>
+        <p>Press any key on your keyboard:</p>
+        <p id="keyboardResult"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 FlixFlow</p>
+    </footer>
+
+    <script>
+        // Array of YouTube video links
+        const youtubeLinks = [
+            'https://www.youtube.com/embed/7oaGUg7ik_c',
+            'https://www.youtube.com/embed/RqrrWejHHeI',
+            'https://www.youtube.com/embed/88vmzn_LufA',
+            'https://www.youtube.com/embed/4tzcLf-Jihc',
+            'https://www.youtube.com/embed/5ZO1TTdnplA',
+            'https://www.youtube.com/embed/GuJ5UuknsHU'
+        ];
+
+        // Function to display a random YouTube video
+        function displayRandomVideo() {
+            const randomIndex = Math.floor(Math.random() * youtubeLinks.length);
+            document.getElementById('youtubeVideo').src = youtubeLinks[randomIndex];
+        }
+
+        // Function for the simple game
+        function startGame() {
+            const randomNumber = Math.random();
+            if (randomNumber > 0.5) {
+                document.getElementById('gameResult').innerText = 'You win!';
+            } else {
+                document.getElementById('gameResult').innerText = 'You lose!';
+            }
+        }
+
+        // Function to save user notes
+        function saveNotes() {
+            const userNotes = document.getElementById('userNotes').value;
+            localStorage.setItem('userNotes', userNotes);
+            alert('Notes saved!');
+        }
+
+        // Function to check mouse DPI
+        function checkMouseDPI() {
+            alert('Mouse DPI: This feature is just a placeholder and may not accurately determine your mouse DPI.');
+        }
+
+        // Function to display pressed key in the keyboard checker
+        function checkKeyPressed(event) {
+            document.getElementById('keyboardResult').innerText = `Key pressed: ${event.key}`;
+        }
+
+        // Event listener for key press
+        document.addEventListener('keydown', checkKeyPressed);
+
+        // Call the functions when the page loads
+        displayRandomVideo();
+
+        // Load saved notes from localStorage
+        const savedNotes = localStorage.getItem('userNotes');
+        if (savedNotes) {
+            document.getElementById('userNotes').value = savedNotes;
+        }
+    </script>
+</body>
+</html>
